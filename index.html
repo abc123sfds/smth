@@ -6,28 +6,29 @@
 <title>IB Grades – Circular Slider Version</title>
 <style>
   :root {
-    --bg: #0f1724;
-    --muted: #8894a6;
-    --glass: rgba(255,255,255,0.03);
+    --bg: #ffffff;
+    --muted: #555555;
+    --glass: rgba(0,0,0,0.03);
     font-family: Inter, system-ui, sans-serif;
   }
   body {
     margin: 0;
-    background: #071524;
-    color: #e6eef8;
+    background: var(--bg);
+    color: #1a1a1a;
   }
   .wrap {
     max-width: 1100px;
     margin: 30px auto;
     padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 360px;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
   }
   .panel {
     background: var(--glass);
     padding: 18px;
     border-radius: 12px;
+    color: #1a1a1a;
   }
   .subjects {
     display: grid;
@@ -40,7 +41,7 @@
     align-items: center;
     padding: 10px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.02);
+    background: rgba(0,0,0,0.02);
   }
   .circle {
     width: 90px;
@@ -66,6 +67,7 @@
     font-weight: 700;
     font-size: 18px;
     pointer-events: none;
+    color: #1a1a1a;
   }
   .controls {
     flex: 1;
@@ -74,9 +76,10 @@
     font-weight: 700;
     font-size: 14px;
     margin-bottom: 4px;
+    color: #1a1a1a;
   }
   .name[contenteditable] {
-    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
     outline: none;
     padding-bottom: 2px;
   }
@@ -84,14 +87,15 @@
     width: 100%;
     padding: 6px;
     border-radius: 6px;
-    background: #08111f;
-    color: #e6eef8;
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #f5f5f5;
+    color: #1a1a1a;
+    border: 1px solid rgba(0,0,0,0.08);
     margin-top: 6px;
   }
   .big-circle {
     width: 180px;
     height: 180px;
+    margin: 20px auto 0 auto;
     position: relative;
   }
   .big-circle svg {
@@ -110,13 +114,14 @@
   .total-points {
     font-size: 34px;
     font-weight: 800;
+    color: #1a1a1a;
   }
   .fail {
     margin-top: 8px;
     background: rgba(255,80,80,0.12);
     padding: 8px;
     border-radius: 8px;
-    color: #ffbdbd;
+    color: #c0392b;
     font-weight: 600;
   }
 </style>
@@ -124,7 +129,7 @@
 <body>
 <div class="wrap">
 
-  <!-- LEFT PANEL -->
+  <!-- SUBJECTS PANEL -->
   <div class="panel">
     <h1 style="margin-top:0;font-size:20px">IB Subjects</h1>
     <div class="subjects" id="subjectsList"></div>
@@ -147,22 +152,20 @@
     <div id="failNote"></div>
   </div>
 
-  <!-- RIGHT PANEL -->
+  <!-- TOTAL POINTS PANEL BELOW -->
   <div class="panel">
-    <h2 style="margin-top:0;font-size:18px">Total Points</h2>
-
+    <h2 style="margin-top:0;font-size:18px;text-align:center">Total Points</h2>
     <div class="big-circle">
       <svg viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="52" stroke="rgba(255,255,255,0.06)" stroke-width="12" fill="none"></circle>
+        <circle cx="60" cy="60" r="52" stroke="rgba(0,0,0,0.06)" stroke-width="12" fill="none"></circle>
         <circle id="totalArc" cx="60" cy="60" r="52" stroke-width="12"
           stroke-linecap="round" fill="none" stroke-dasharray="0 999"></circle>
       </svg>
       <div class="big-inner">
         <div class="total-points" id="totalPoints">0</div>
-        <div style="font-size:12px;color:#8894a6">/45</div>
+        <div style="font-size:12px;color:#555555">/45</div>
       </div>
     </div>
-
   </div>
 
 </div>
@@ -172,7 +175,7 @@
 function gradeColor(g) {
   const ratio = (g - 1) / 6;  
   const hue = 120 * ratio;  
-  return `hsl(${hue} 85% 55%)`;
+  return `hsl(${hue} 70% 40%)`;
 }
 
 // ---------- TOK–EE matrix ----------
@@ -207,7 +210,7 @@ subjects.forEach((s, i) => {
     <div class="circle" data-i="${i}">
       <svg viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="42"
-          stroke="rgba(255,255,255,0.09)" stroke-width="12" fill="none"></circle>
+          stroke="rgba(0,0,0,0.09)" stroke-width="12" fill="none"></circle>
         <circle class="arc" cx="50" cy="50" r="42"
           stroke-width="12" stroke-linecap="round" fill="none" stroke-dasharray="0 999"></circle>
       </svg>
@@ -303,7 +306,7 @@ function updateTotal() {
   const ratio = total / 45;
   const circ = 2*Math.PI*52;
   totalArc.setAttribute("stroke-dasharray", `${ratio*circ} ${circ}`);
-  totalArc.setAttribute("stroke", `hsl(${120*ratio} 85% 55%)`);
+  totalArc.setAttribute("stroke", `hsl(${120*ratio} 70% 40%)`);
 
   totalPointsEl.textContent = total;
 
